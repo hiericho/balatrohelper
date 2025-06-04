@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Jolly+Lodger&family=Nunito:wght@300;400;600;700&display=swap');
+
+:root {
+    --font-heading: 'Jolly Lodger', cursive;
+    --font-body: 'Nunito', sans-serif;
+
+    --card-width-small: 48px;
+    --card-height-small: calc(var(--card-width-small) * 1.4);
+    --card-width-large: 65px;
+    --card-height-large: calc(var(--card-width-large) * 1.4);
+
+    --transition-fast: 0.15s ease-in-out;
+    --transition-normal: 0.25s ease-in-out;
+
+    /* --- NEW SOFT PALETTE ACCENTS (RGB for opacity usage) --- */
+    --soft-red: #E76F51;         /* Terra Cotta / Soft Coral Red */
+    --soft-red-rgb: 231, 111, 81;
+    --soft-yellow: #F4A261;      /* Sandy Brown / Soft Orange-Yellow */
+    --soft-yellow-rgb: 244, 162, 97;
+    --soft-blue: #2A9D8F;        /* Persian Green / Soft Tealish Blue */
+    --soft-blue-rgb: 42, 157, 143;
+
+    /* Supporting accent for success/positive feedback */
+    --accent-positive: #2ecc71; /* Keep a clear green for positive things */
+    --accent-positive-rgb: 46, 204, 113;
+}
+
+/* --- DARK THEME --- */
+body.dark-theme {
+    --primary-bg: #264653;        /* Dark Teal/Blue (base for the new palette) */
+    --secondary-bg: #2c505c;      /* Slightly Lighter Dark Teal */
+    --card-section-bg: #223c47;   /* Even Darker for sections */
+    --text-primary: #E9C46A;      /* Saffron Yellow (for primary text - good contrast) */
+    --text-secondary: #A8DADC;    /* Pale Blue (for secondary text) */
+    --border-color: #456069;      /* Muted Teal Border */
+
+    /* Accents will use the :root defined soft colors */
+    --accent-1: var(--soft-red);
+    --accent-2: var(--soft-yellow);
+    --accent-3: var(--soft-blue);
+
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --input-bg: #1e3a45;
+}
+
+/* --- LIGHT THEME --- */
+body.light-theme {
+    --primary-bg: #E9F0F2;        /* Very Light Cool Grey */
+    --secondary-bg: #FFFFFF;      /* White */
+    --card-section-bg: #DDE5E8;   /* Light Grey Blue for sections */
+    --text-primary: #2A3B47;      /* Dark Slate for text */
+    --text-secondary: #5E7381;    /* Medium Slate Grey for text */
+    --border-color: #C5D0D6;      /* Lighter Grey Border */
+
+    /* Accents will use the :root defined soft colors */
+    --accent-1: var(--soft-red);
+    --accent-2: var(--soft-yellow);
+    --accent-3: var(--soft-blue);
+
+    --shadow-color: rgba(42, 60, 71, 0.15); /* Shadow based on dark slate */
+    --input-bg: #E0E7EA;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.6; padding: 20px; display: flex;
+    justify-content: center; align-items: flex-start;
+    min-height: 100vh;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+.app-container {
+    width: 100%; max-width: 900px;
+    background-color: var(--secondary-bg);
+    padding: 25px 35px; border-radius: 12px;
+    box-shadow: 0 8px 25px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
+.app-header {
+    text-align: center; margin-bottom: 30px; padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    transition: border-color var(--transition-normal);
+}
+.app-header h1 {
+    font-family: var(--font-heading);
+    color: var(--accent-1); /* Using soft-red */
+    font-size: 4.2em;
+    letter-spacing: 1.5px; margin-bottom: 0;
+    text-shadow: 2px 2px 0px var(--accent-3), /* Using soft-blue for shadow */
+                 4px 4px 0px var(--secondary-bg),
+                 5px 5px 5px var(--shadow-color);
+    transition: text-shadow 0.3s ease; margin-top: 10px;
+}
+.app-header h1 .header-o { display: inline-block; transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), color 0.3s ease; }
+.app-header h1:hover .header-o { color: var(--accent-2); transform: rotate(360deg) scale(1.2); } /* Using soft-yellow */
+.app-header .subtitle { color: var(--text-secondary); font-size: 1.1em; font-weight: 300; margin-bottom: 15px; }
+.theme-toggle-button {
+    background: none; border: 1px solid var(--border-color);
+    color: var(--text-secondary); padding: 8px 12px;
+    border-radius: 20px; cursor: pointer; font-size: 1.3em;
+    transition: var(--transition-normal); line-height: 1;
+    display: block; margin: 0 auto; margin-top: 10px;
+}
+.theme-toggle-button:hover {
+    background-color: var(--card-section-bg);
+    border-color: var(--accent-2); /* soft-yellow */
+    color: var(--accent-2);
+}
+
+@keyframes popIn { 0% { transform: scale(0.8) rotate(-5deg); opacity: 0; } 70% { transform: scale(1.05) rotate(2deg); opacity: 1; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+@keyframes flicker { 0%, 100% { opacity: 1; text-shadow: 0 0 3px var(--accent-2); } 50% { opacity: 0.6; text-shadow: 0 0 8px var(--accent-2), 0 0 12px var(--accent-1); } }
+@keyframes buttonPop { 0% { transform: scale(1); } 50% { transform: scale(1.08) rotate(-2deg); } 100% { transform: scale(1); } }
+.reveal-animation { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+.flicker-emoji { display: inline-block; animation: flicker 1.8s infinite ease-in-out; }
+
+.interactive-section { transition: box-shadow var(--transition-normal); }
+.interactive-section:focus-within, .interactive-section:hover { box-shadow: 0 0 15px rgba(var(--soft-blue-rgb), 0.3); } /* soft-blue glow */
+.card-selector-section {
+    padding: 20px; border-radius: 8px; margin-bottom: 25px;
+    background-color: var(--card-section-bg); border: 1px solid var(--border-color);
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+.card-selector-section h2 { font-family: var(--font-heading); color: var(--accent-3); font-size: 2.2em; text-align: center; margin-bottom: 15px; } /* soft-blue */
+.drag-instructions { text-align: center; color: var(--text-secondary); font-style: italic; margin-bottom: 15px; font-size: 0.9em; }
+.available-cards-deck {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; justify-content: center; padding: 10px;
+    background-color: rgba(0,0,0,0.1); border-radius: 6px; min-height: calc(var(--card-height-small) + 20px);
+    border: 3px dashed transparent; transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+.available-cards-deck.drag-over-return { border-color: var(--accent-1); background-color: rgba(var(--soft-red-rgb), 0.1); } /* soft-red */
+.clickable-card {
+    width: var(--card-width-small); height: var(--card-height-small); cursor: grab;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-normal), border-color var(--transition-fast), filter var(--transition-fast);
+    border-radius: 4px; box-shadow: 0 1px 3px var(--shadow-color);
+    border: 2px solid transparent; overflow: hidden; background-color: var(--dark-bg);
+}
+.clickable-card:active { cursor: grabbing; }
+.clickable-card.dragging { opacity: 0.4; transform: scale(0.9) rotate(5deg); }
+.clickable-card.card-pop-select { animation: popIn 0.3s ease-out forwards; }
+.clickable-card img { width: 100%; height: 100%; display: block; object-fit: cover; border-radius: 2px; }
+.clickable-card:hover {
+    transform: translateY(-3px) scale(1.12) rotate(5deg);
+    box-shadow: 0 5px 12px var(--shadow-color), 0 0 15px var(--accent-2); /* soft-yellow */
+    border-color: var(--accent-2); filter: brightness(1.1);
+}
+.clickable-card.selected {
+    transform: scale(0.9) rotate(-2deg); opacity: 0.4;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+    border-color: var(--accent-3); filter: grayscale(30%); /* soft-blue */
+    cursor: default;
+}
+.selected-hand-drop-zone {
+    border: 3px dashed var(--border-color); border-radius: 8px; padding: 15px;
+    margin-top: 20px; margin-bottom: 15px; min-height: calc(var(--card-height-small) + 30px);
+    transition: border-color var(--transition-fast), background-color var(--transition-fast); text-align: center;
+}
+.selected-hand-drop-zone.drag-over { border-color: var(--accent-2); background-color: rgba(var(--soft-yellow-rgb), 0.1); } /* soft-yellow */
+.selected-hand-drop-zone h3 { font-size: 1.1em; color: var(--text-secondary); margin-bottom: 10px; font-weight: 400; }
+
+.selected-hand-info { text-align: center; }
+.selected-hand-info h3 { font-size: 1em; color: var(--text-secondary); margin-bottom: 8px; font-weight: 400; }
+.selected-cards-preview {
+    min-height: calc(var(--card-height-small) + 12px); background-color: var(--primary-bg);
+    border: 1px dashed var(--border-color); border-radius: 6px; padding: 6px; margin-bottom: 10px;
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+.selected-cards-preview .card-image-display img { cursor: grab; }
+.selected-cards-preview .card-image-display img:active { cursor: grabbing; }
+.selected-cards-preview .card-image-display img.dragging-from-hand { opacity: 0.4; transform: scale(0.9) rotate(-5deg); }
+
+.animated-button { position: relative; overflow: hidden; transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast) !important; padding: 10px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.animated-button .btn-icon { display: inline-block; transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); font-size: 1.2em; }
+.animated-button:hover .btn-icon { transform: translateX(3px) rotate(15deg) scale(1.2); }
+.animated-button:active { animation: buttonPop 0.2s ease-out; }
+#clearSelectedCards.animated-button {
+    padding: 8px 15px; background-color: var(--accent-1); color: white; /* soft-red */
+    border: none; border-radius: 5px; cursor: pointer; font-size: 0.9em; font-weight: 600;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+#clearSelectedCards.animated-button:hover { background-color: #d65a3e; } /* Darker soft-red */
+
+.input-section { margin-bottom: 25px; }
+.input-group { display: flex; gap: 10px; align-items: stretch; }
+.autocomplete-wrapper { flex-grow: 1; position: relative; }
+#cardInput {
+    width: 100%; padding: 10px 14px; border: 1px solid var(--border-color);
+    border-radius: 6px; font-size: 1em; background-color: var(--input-bg);
+    color: var(--text-primary); height: 100%; font-family: var(--font-body);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-normal), color var(--transition-normal);
+}
+#cardInput::placeholder { color: var(--text-secondary); opacity: 0.8; }
+#cardInput:focus { outline: none; border-color: var(--accent-3); box-shadow: 0 0 0 3px rgba(var(--soft-blue-rgb), 0.3); } /* soft-blue focus */
+.autocomplete-suggestions {
+    position: absolute; top: 100%; left: 0; right: 0; background-color: var(--secondary-bg); border: 1px solid var(--border-color);
+    border-top: none; border-radius: 0 0 6px 6px; z-index: 1000; max-height: 200px; overflow-y: auto; box-shadow: 0 4px 10px var(--shadow-color);
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+.autocomplete-suggestions div { padding: 8px 10px; cursor: pointer; display: flex; align-items: center; transition: background-color var(--transition-fast), transform var(--transition-fast); }
+.autocomplete-suggestions div:hover, .autocomplete-suggestions div.active { background-color: var(--accent-3); color: white; transform: translateX(5px); } /* soft-blue hover */
+.autocomplete-suggestions img { width: calc(var(--card-width-small) * 0.85); height: calc(var(--card-height-small) * 0.85); border-radius: 3px; object-fit: contain; background-color: #555; transition: transform var(--transition-fast); }
+.autocomplete-suggestions div:hover img, .autocomplete-suggestions div.active img { transform: scale(1.1) rotate(-3deg); }
+.autocomplete-suggestions:empty { display: none; }
+
+#evaluateButton.animated-button {
+    padding: 10px 20px; background: linear-gradient(135deg, var(--accent-3), var(--accent-1)); /* soft-blue to soft-red */
+    color: white; border: none; border-radius: 6px; cursor: pointer;
+    font-weight: 700; font-size: 1.05em; letter-spacing: 0.5px;
+    height: 100%; box-shadow: 0 2px 5px var(--shadow-color);
+}
+#evaluateButton.animated-button:hover { background: linear-gradient(135deg, var(--accent-1), var(--accent-3)); transform: translateY(-2px); box-shadow: 0 4px 8px var(--shadow-color); }
+
+.error-message { color: var(--accent-1); background-color: rgba(var(--soft-red-rgb), 0.1); border-left: 4px solid var(--accent-1); padding: 10px 14px; border-radius: 0 5px 5px 0; margin-top: 10px; font-size: 0.9em; font-weight: 600; }
+.error-message:empty { display: none; }
+
+.results-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 25px; }
+@media (min-width: 768px) { .results-grid { grid-template-columns: 1fr 1fr; } #bestPlaySection.primary-result, #inputSummarySection { grid-column: span 2; } }
+.result-card { background-color: var(--card-section-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); transition: background-color var(--transition-normal), border-color var(--transition-normal), transform var(--transition-fast), box-shadow var(--transition-fast); }
+.result-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 6px 18px var(--shadow-color); }
+.result-card.primary-result { box-shadow: 0 0 20px rgba(var(--accent-positive-rgb), 0.3), 0 5px 15px var(--shadow-color); } /* Using clear positive accent */
+.result-card.primary-result:hover { box-shadow: 0 0 25px rgba(var(--accent-positive-rgb), 0.4), 0 6px 18px var(--shadow-color); }
+.result-card h2 { font-family: var(--font-heading); color: var(--accent-2); font-size: 1.9em; letter-spacing: 0.5px; margin-top: 0; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px dashed var(--border-color); transition: border-color var(--transition-normal); } /* soft-yellow for titles */
+.result-card.primary-result h2 { color: var(--accent-positive); } /* Clear positive accent */
+.result-card p { margin-bottom: 8px; font-size: 0.95em; color: var(--text-secondary); }
+.result-card strong { color: var(--text-primary); font-weight: 600; }
+.hand-type-display span { color: var(--accent-positive); font-weight: 700; font-size: 1.1em; } /* Clear positive accent */
+.advice-quote { font-style: italic; color: var(--accent-3); padding: 10px; background-color: rgba(var(--soft-blue-rgb), 0.1); border-left: 3px solid var(--accent-3); border-radius: 4px; } /* soft-blue */
+.keep-discard-columns { display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 500px) { .keep-discard-columns { grid-template-columns: 1fr 1fr; } }
+.keep-discard-columns > div > p { margin-bottom: 5px; font-weight: 600; font-size: 0.9em; }
+
+.card-image-display { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; justify-content: center; }
+.card-image-display img { border-radius: 4px; box-shadow: 0 2px 5px var(--shadow-color); object-fit: contain; background-color: var(--border-color); border: 1px solid var(--border-color); transition: transform 0.2s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+.card-image-display img:hover { transform: scale(1.15) rotate(3deg) translateY(-3px); box-shadow: 0 4px 10px var(--shadow-color); z-index: 10; position: relative; }
+.selected-cards-preview.card-image-display.small-cards img, .card-image-display.small-cards img { width: var(--card-width-small); height: var(--card-height-small); }
+.card-image-display.large-cards img { width: var(--card-width-large); height: var(--card-height-large); }
+#inputSummaryCards.card-image-display img { width: calc(var(--card-width-small) * 1.05); height: calc(var(--card-height-small) * 1.05); }
+
+.other-hands-display { list-style-type: none; }
+.other-hands-display li { background-color: rgba(0,0,0,0.05); padding: 10px; margin-bottom: 6px; border-radius: 4px; border-left: 3px solid var(--accent-2); font-size: 0.9em; } /* soft-yellow accent */
+.other-hands-display li strong { color: var(--accent-2); display: block; margin-bottom: 5px; }
+.other-hands-display .card-image-display { margin-top: 5px; justify-content: flex-start; }
+
+.app-footer { text-align: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid var(--border-color); font-size: 0.9em; color: var(--text-secondary); transition: border-color var(--transition-normal); }
+#resultsArea { display: none; }

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joker's Wild Hand!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="joker_favicon.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jolly+Lodger&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <header class="app-header">
+            <h1>J<span class="header-o">O</span>KER'S WILD ORACLE!</h1>
+            <p class="subtitle">Let the Jester deal your fate! 🃏</p>
+            <button id="themeToggleButton" class="theme-toggle-button" aria-label="Toggle light/dark theme">
+                ☀️ / 🌙
+            </button>
+        </header>
+
+        <main class="app-main">
+            <section class="card-selector-section interactive-section">
+                <h2>Drag Your Cards: <span class="flicker-emoji">✨</span></h2>
+                <p class="drag-instructions">Drag cards from the deck below to your hand, or click them. Drag from hand to deck to discard.</p>
+                <div id="availableCardsDeck" class="available-cards-deck">
+                </div>
+
+                <div id="selectedHandDropZone" class="selected-hand-drop-zone">
+                    <h3>Your Hand of Mayhem:</h3>
+                    <div id="selectedCardsDisplay" class="selected-cards-preview card-image-display small-cards">
+                    </div>
+                </div>
+                <button id="clearSelectedCards" class="button-secondary animated-button">
+                    <span class="btn-text">Banish All!</span><span class="btn-icon">💥</span>
+                </button>
+            </section>
+
+            <section class="input-section interactive-section">
+                <div class="input-group">
+                    <div class="autocomplete-wrapper">
+                        <input type="text" id="cardInput" placeholder="Your hand (auto-filled from selection)..." autocomplete="off">
+                        <div id="autocompleteSuggestions" class="autocomplete-suggestions"></div>
+                    </div>
+                    <button id="evaluateButton" class="animated-button" aria-label="Evaluate Hand">
+                        <span class="btn-text">Reveal the Ruckus!</span><span class="btn-icon">🔮</span>
+                    </button>
+                </div>
+                <div id="errorDisplay" class="error-message" role="alert" aria-live="assertive"></div>
+            </section>
+
+            <div id="resultsArea" class="results-grid" style="display: none;">
+                <section id="inputSummarySection" class="result-card">
+                    <h2>Your Dealt Hand:</h2>
+                    <div id="inputSummaryCards" class="card-image-display"></div>
+                </section>
+
+                <section id="bestPlaySection" class="result-card primary-result">
+                    <h2>🌟 Wildest Play Unveiled!</h2>
+                    <p class="hand-type-display"><strong>This Hand is a:</strong> <span id="bestHandType"></span>!</p>
+                    <div id="bestHandCards" class="card-image-display large-cards"></div>
+                    <div id="cardsNotPlayedWrapper" style="display:none;">
+                        <p><strong>Cards Left in the Lurch:</strong></p>
+                        <div id="cardsNotPlayed" class="card-image-display small-cards"></div>
+                    </div>
+                </section>
+
+                <section id="discardAdviceSection" class="result-card">
+                    <h2>🃏 Joker's Cunning Counsel:</h2>
+                    <p id="adviceText" class="advice-quote"></p>
+                    <div id="keepDiscardInfo" class="keep-discard-columns">
+                        <div><p><strong>Hold These Aces (Metaphorically!):</strong></p><div id="cardsToKeep" class="card-image-display small-cards"></div></div>
+                        <div><p><strong>Toss These Jokers (Literally!):</strong></p><div id="cardsToDiscard" class="card-image-display small-cards"></div></div>
+                    </div>
+                </section>
+
+                <section id="otherHandsSection" class="result-card" style="display:none;">
+                    <h2>Other Shenanigans:</h2>
+                    <ul id="otherHandsList" class="other-hands-display"></ul>
+                </section>
+            </div>
+        </main>
+
+        <footer class="app-footer">
+            <p>© 202X Hiericho's Wild Inc. May your ante always be up! :D</p>
+        </footer>
+    </div>    
+    <script src="script.js"></script>
+    <audio id="cardSelectSound" src="sounds/card_select.mp3" preload="auto"></audio>
+    <audio id="cardDropSound" src="sounds/card_drop.mp3" preload="auto"></audio>
+    <audio id="cardReturnSound" src="sounds/card_return.mp3" preload="auto"></audio>
+    <audio id="resultsRevealSound" src="sounds/results_reveal.mp3" preload="auto"></audio>
+</body>
+</html>
